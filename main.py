@@ -7,6 +7,7 @@ import os
 import speech_recognition as sr
 import playsound
 from gtts import gTTS
+import wolframalpha
 
 
 def speak(text):
@@ -34,3 +35,8 @@ if "hello" in text:
     speak("Hi, how are you sir?")
 if "fine" in text:
     speak("Excellent, How can i help you today?")
+
+client = wolframalpha.Client("544R9X-8R9Y6QAR4R")
+res = client.query(text)
+print(next(res.results).text)
+speak(str(next(res.results).text))
