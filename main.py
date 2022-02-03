@@ -1,21 +1,23 @@
 #!/usr/bin/env python3
 
-# NOTE: this example requires PyAudio because it uses the Microphone class
-from datetime import datetime
-import time
-import speech_recognition as sr
+from vosk import Model, KaldiRecognizer
+import os
+import pyaudio
 
-# Get audio from the microphone
-r = sr.Recognizer()
-with sr.Microphone() as source:
-    # print("Hello sir, how can i help you?")
-    audio = r.listen(source)
+model = Model("model")
+rec = KaldiRecognizer(model, 16000)
 
-    #  Recognizes audio using google
-    text = r.recognize_google(audio)
+# Opens microphone for listening
+p = pyaudio.PyAudio()
+stream = p.open(format=pyaudio.paInt16, channels=1,
+                rate=16000, input=True, frames_per_buffer=8000)
+stream.start_stream()
 
-    # Added function to return time when asked
-    if str(text).lower() == 'what time is it':
-        t = time.localtime()
-        current_time = time.strftime("%H:%M:%S", t)
-        print(current_time)
+while True:
+    data = stream.read(4000)
+    if len(data) == 0:
+        break
+    if rec.AcceptWaveform(data):
+        print(rec.Result())
+
+print(rec.FinalResult())
