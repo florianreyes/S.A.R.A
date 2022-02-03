@@ -1,7 +1,7 @@
 import pyttsx3
 engine = pyttsx3.init()
 
-engine.say("te voy a comer la panocha")
+engine.say("hello sir, how can i help you")
 engine.runAndWait()
 
 voices = engine.getProperty('voices')

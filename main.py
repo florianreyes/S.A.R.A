@@ -4,7 +4,7 @@ from vosk import Model, KaldiRecognizer
 import os
 import pyaudio
 
-model = Model("model")
+model = Model("/Users/usuario/Desktop/sara/model")
 rec = KaldiRecognizer(model, 16000)
 
 # Opens microphone for listening
@@ -14,10 +14,10 @@ stream = p.open(format=pyaudio.paInt16, channels=1,
 stream.start_stream()
 
 while True:
-    data = stream.read(4000)
+    data = stream.read(4096)
     if len(data) == 0:
         break
     if rec.AcceptWaveform(data):
         print(rec.Result())
 
-print(rec.FinalResult())
+print(rec.FinalResult)
