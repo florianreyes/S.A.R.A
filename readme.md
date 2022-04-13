@@ -7,4 +7,5 @@
 
     Speech recognition
     Speech synthesis
-    Some sort of AI
+    yahoo finance
+  
